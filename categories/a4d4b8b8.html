@@ -29,7 +29,7 @@
     <!--Title-->
 
 
-<title>我的第一篇博客 | 超哥博客</title>
+<title>python | 超哥博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
@@ -114,7 +114,7 @@
                             </li>
                         
                             <li role="presentation" class="text-center">
-                                <a href="/categories数据库/"><i class="fa "></i>数据库</a>
+                                <a href="/categories/数据库/"><i class="fa "></i>数据库</a>
                             </li>
                         
                             <li role="presentation" class="text-center">
@@ -142,9 +142,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="我的第一篇博客">
+        <h1 id="python">
             
-	            我的第一篇博客
+	            python
             
         </h1>
         <div class="post-meta">
@@ -152,8 +152,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/Linux基础">
-            Linux基础
+        <a href="/categories/Python开发">
+            Python开发
         </a>
     </span>
     
@@ -164,8 +164,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/Linux" title="Linux">
-                        Linux
+                    <a href="/tags/python" title="python">
+                        python
                     </a>
                 
             
@@ -180,6 +180,11 @@
             <span class="date-meta">2018/11/12</span>
         </span>
         
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
     
 </div>
 
@@ -188,8 +193,7 @@
     </div>
     
     <div class="post-body post-content">
-        <p>你哈篇爱上</p>
-
+        
     </div>
     
         <div class="reward">
@@ -223,12 +227,38 @@
 <div class="article-nav prev-next-wrap clearfix">
     
     
+        <a href="/categories/d95d7e09.html" class="next-post btn btn-default" title="我的第一篇博客">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">我的第一篇博客</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
 </div>
 
 
     <div id="comments">
         
-   <p>评论系统未开启，无法评论！</p>
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
 
     </div>
 
@@ -270,6 +300,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
     
 </div>
 
@@ -314,6 +354,8 @@
     </script>
 
 
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 <script src="/js/app.js?rev=@@hash"></script>
