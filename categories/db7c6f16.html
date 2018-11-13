@@ -29,7 +29,7 @@
     <!--Title-->
 
 
-<title>我的第一篇博客 | 超哥博客</title>
+<title>Python输出各类三角形 | 超哥博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
@@ -142,9 +142,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="我的第一篇博客">
+        <h1 id="Python输出各类三角形">
             
-	            我的第一篇博客
+	            Python输出各类三角形
             
         </h1>
         <div class="post-meta">
@@ -152,8 +152,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/Linux基础">
-            Linux基础
+        <a href="/categories/Python开发">
+            Python开发
         </a>
     </span>
     
@@ -164,8 +164,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/Linux" title="Linux">
-                        Linux
+                    <a href="/tags/Python" title="Python">
+                        Python
                     </a>
                 
             
@@ -177,7 +177,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2018/11/12</span>
+            <span class="date-meta">2018/11/13</span>
         </span>
         
             <span class="fa-wrap">
@@ -193,7 +193,21 @@
     </div>
     
     <div class="post-body post-content">
-        <p>你哈篇爱上</p>
+        <h3 id="Python输出各类三角形"><a href="#Python输出各类三角形" class="headerlink" title="Python输出各类三角形"></a>Python输出各类三角形</h3><ul>
+<li>今天面试被问了这个问题先将这类问题做个总结</li>
+<li><p>1.打印左下角三角形：<br>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">for i in range(n):</span><br><span class="line">   for j in range(0,i):</span><br><span class="line">      print(&quot;*&quot;end=&quot; &quot;)</span><br><span class="line">   for k in range(i,n):</span><br><span class="line">      print(&quot; &quot;,end=&quot; &quot;)</span><br><span class="line">    print(&quot;&quot;)</span><br><span class="line"></span><br><span class="line">    *                   </span><br><span class="line">    * *                 </span><br><span class="line">    * * *               </span><br><span class="line">    * * * *             </span><br><span class="line">    * * * * *           </span><br><span class="line">    * * * * * *         </span><br><span class="line">    * * * * * * *       </span><br><span class="line">    * * * * * * * *     </span><br><span class="line">    * * * * * * * * *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.打印右上角三角形：<br>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">for i in range(n):</span><br><span class="line">  for j in range(0,i):</span><br><span class="line">    print(&quot; &quot;,end=&quot; &quot;)</span><br><span class="line">  for k in range(i,n):</span><br><span class="line">    print(&quot;*&quot;,end=&quot; &quot;)</span><br><span class="line">  print(&quot; &quot;)</span><br><span class="line"></span><br><span class="line">  * * * * * * * * * *</span><br><span class="line">    * * * * * * * * *</span><br><span class="line">      * * * * * * * *</span><br><span class="line">        * * * * * * *</span><br><span class="line">          * * * * * *</span><br><span class="line">            * * * * *</span><br><span class="line">              * * * *</span><br><span class="line">                * * *</span><br><span class="line">                  * *</span><br><span class="line">                    *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.打印等腰三角形<br>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def A(n):</span><br><span class="line">    for i in range(n):</span><br><span class="line">        for j in range(0, i):</span><br><span class="line">            print(end=&quot; &quot;)</span><br><span class="line">        for k in range(i, n):</span><br><span class="line">            print(&quot;*&quot;, end=&quot; &quot;)</span><br><span class="line">        print(&quot;&quot;)</span><br><span class="line">A(10)</span><br><span class="line"></span><br><span class="line">  * * * * * * * * * *</span><br><span class="line">   * * * * * * * * *</span><br><span class="line">    * * * * * * * *</span><br><span class="line">     * * * * * * *</span><br><span class="line">      * * * * * *</span><br><span class="line">       * * * * *</span><br><span class="line">        * * * *</span><br><span class="line">         * * *</span><br><span class="line">          * *</span><br><span class="line">           *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.打印等腰三角形<br>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def A(n):</span><br><span class="line">  for i in range(n):</span><br><span class="line">    for j range(0,n-i):</span><br><span class="line">       print(ent=&quot; &quot;)</span><br><span class="line">    for k range(n-i,n):</span><br><span class="line">       print(&quot;*&quot;,ent=&quot; &quot;)</span><br><span class="line">   print(&quot;&quot;)</span><br><span class="line"></span><br><span class="line">         *</span><br><span class="line">        * *</span><br><span class="line">       * * *</span><br><span class="line">      * * * *</span><br><span class="line">     * * * * *</span><br><span class="line">    * * * * * *</span><br><span class="line">   * * * * * * *</span><br><span class="line">  * * * * * * * *</span><br><span class="line"> * * * * * * * * *</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
     </div>
     
@@ -227,39 +241,18 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/categories/a4d4b8b8.html" class="pre-post btn btn-default" title="python">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">python</span>
-        </a>
     
+        <a href="/categories/14e6f1eb.html" class="next-post btn btn-default" title="冒泡排序">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">冒泡排序</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
     
 </div>
 
 
     <div id="comments">
         
-    
-    <div id="vcomments" class="valine"></div>
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-    <script>
-        new Valine({
-            av: AV,
-            el: '#vcomments',
-            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-            placeholder: '说点什么吧',
-            notify: false,
-            verify: false,
-            avatar: 'mm',
-            meta: 'nick,mail'.split(','),
-            pageSize: '10',
-            path: window.location.pathname,
-            lang: 'zh-CN'.toLowerCase()
-        })
-    </script>
-
+   <p>评论系统未开启，无法评论！</p>
 
     </div>
 
@@ -273,7 +266,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <p>暂无目录</p>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python输出各类三角形"><span class="toc-text">Python输出各类三角形</span></a></li></ol>
         
     </div>
 </aside>
@@ -316,7 +309,7 @@
 
             </div>
             <div class="col-sm-12">
-                <span>Copyright &copy; 2018
+                <span>Copyright &copy; 2017
                 </span> |
                 <span>
                     Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
