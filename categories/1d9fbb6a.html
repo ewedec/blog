@@ -29,7 +29,7 @@
     <!--Title-->
 
 
-<title>工具 | 超哥博客</title>
+<title>Docker基础 | 超哥博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
@@ -138,126 +138,147 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <article class="post">
-    <h1 class="post-head">工具</h1>
-    <div class="post-body">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Docker基础">
+            
+	            Docker基础
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/运维之路">
+            运维之路
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/docker" title="docker">
+                        docker
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
         
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/11/14</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1.安装Docker"></a>1.安装Docker</h3><ul>
+<li>linux安装Docker<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#安装curl命令</span><br><span class="line">sudo apt-get install curl</span><br><span class="line">#安装Docker</span><br><span class="line">curl -fsSl https://get.Docker.com |sh</span><br><span class="line">#检查Docker</span><br><span class="line">sudo docker version</span><br><span class="line">#将当前用户添加到docker组中免敲sudo命令</span><br><span class="line">sudo useradd -aG docker 当前用户名</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#使用不同的的源  </span><br><span class="line">官方源:  </span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -  </span><br><span class="line">add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) st able&quot;</span><br><span class="line">阿里云的源&#123;推荐&#125;  </span><br><span class="line">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -  </span><br><span class="line">add-apt-repository &quot;deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_relea se -cs) stable&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Mac安装Docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">官网下载Docker for Mac 进行安装</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Docker 删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get purge docke-ce -y</span><br><span class="line">rm -rf /var/lib/docer/</span><br><span class="line">rm - rf /etc/docker</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Docker加速器<br>&emsp;&emsp;在国内使用docker的官方镜像源，会因为网络的原因，造成无法下载，或者一直处于超时。所以我们使用 daocloud 的方法进行加速配置。</p>
+</li>
+</ul>
+<h3 id="2-Docker介绍"><a href="#2-Docker介绍" class="headerlink" title="2.Docker介绍"></a>2.Docker介绍</h3><ul>
+<li>Docker是什么<br>Docker是一个开源的容器引擎，它基于LXC（LXC又名Linux container，是一种虚拟化的解决方案，这种是内核级的虚拟化。(主流的解决方案Xen ,KVM, LXC)）容器技术，使用GO语言开发。遵循Apache2.0协议。<br>Docker采用C/S架构，其可以为任何应用创建一个轻量级、可移植的、自给自足的容器。Docker就是一种快速解决生产问题的一种技术手段。  </li>
+<li>Docker的特点  <ul>
+<li>三大理念：<br>构建:<br>&emsp;&emsp;将你需要的场景构建好，装在一个镜像中，就好比龙珠中的胶囊一样。<br>运输:<br>&emsp;&emsp;随身携带非常方便<br>运行:<br>&emsp;&emsp;只要在需要的地方一放，打开使用就OK了  </li>
+<li>优点:<br>&emsp;&emsp;多:   试用场景多<br>&emsp;&emsp;快:   环境部署快，更新快<br>&emsp;&emsp;好:   好多人在用，东西好<br>&emsp;&emsp;省:   省钱省力省人工  </li>
+<li>缺点:<br>&emsp;&emsp;太腻歪人:  依赖操作系统<br>&emsp;&emsp;不善于沟通: 依赖网络<br>&emsp;&emsp;无法使用外部硬件  </li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
     </div>
 </article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/categories/db7c6f16.html" class="next-post btn btn-default" title="Python输出各类三角形">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Python输出各类三角形</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
                 </main>
                 
-                    
-    <aside class="col-md-4 sidebar">
-        
-        
+                    <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
-        <h3 class="title">搜索</h3>
-        <div id="search-form">
-            <div id="result-mask" class="hide"></div>
-            <div class="search-area">
-                
-                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢？">
-                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
-                
-                
-            </div>
-            <div id="result-wrap" class="hide">
-                <div id="search-result"></div>
-            </div>
-            <div class="hide">
-                <template id="search-tpl">
-                    <div class="item">
-                        <a href="/{path}" title="{title}">
-                            <div class="title">{title}</div>
-                            <div class="content">{content}</div>
-                        </a>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
+        <h3 class="title">文章目录</h3>
         
-        
-        
-        
-    <div class="widget">
-      <h3 class="title">社交</h3> 
-        <div class="content social">
-            
-	            <a href="https://github.com/ewedec" rel="external nofollow" title="Github" target="_blank">
-			    	<i class="git fa fa-git"></i>
-			    </a>
-            
-	            <a href="mailto:snippet@91h5.cc" rel="external nofollow" title="邮箱" target="_blank">
-			    	<i class="envelope-o fa fa-envelope-o"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
-			    	<i class="qq fa fa-qq"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="微信" target="_blank">
-			    	<i class="weixin fa fa-weixin"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
-			    	<i class="users fa fa-users"></i>
-			    </a>
-            
-	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
-			    	<i class="feed fa fa-feed"></i>
-			    </a>
-            
-        </div>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python开发/"><i class="fa" aria-hidden="true">Python开发</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维之路/"><i class="fa" aria-hidden="true">运维之路</i></a><span class="category-list-count">1</span></li></ul>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/"><i class="fa" aria-hidden="true">2018年11月</i></a><span class="archive-list-count">3</span></li></ul>
-    </div>
-
-
-        
-        
-  <div class="widget">
-    <h3 class="title">标签云</h3>
-    <div class="content tag-cloud">
-        
-            <canvas width="300" height="300" id="tag-cloud-3d">
-                <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
-            </canvas>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装Docker"><span class="toc-text">1.安装Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Docker介绍"><span class="toc-text">2.Docker介绍</span></a></li></ol>
         
     </div>
-  </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">友链</h3>
-        <div class="content friends-link">
-        
-            <a href="https://hexo.io/zh-cn/" class="fa" target="_blank">Hexo官网</a>
-        
-        </div>
-    </div>
-
-
-        
-    </aside>
+</aside>
 
                 
             </div>
@@ -310,8 +331,6 @@
     </div>
 </div>
 
-
-	<script src="/js/search.js?rev=@@hash"></script>
 
 
 
