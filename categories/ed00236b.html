@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="超哥博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://ewedwc.github.io">
+    <!--SEO-->
+
+
+
+<meta name="keywords" content="超哥个人博客是记录超哥在技术学习中遇到的点点滴滴的问题，让后学者不再遇到同样的坑，超哥不做技术的讲授者，只做技术的踩坑者，这里我将为你提供Linux、Python、数据库、运维等相关方面的知识。">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Python常用技巧 | 超哥博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Dingchao.Wu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ewedwc.github.io">超哥博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux基础/"><i class="fa "></i>Linux基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python开发/"><i class="fa "></i>Python开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/数据库/"><i class="fa "></i>数据库</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/运维之路/"><i class="fa "></i>运维之路</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Python常用技巧">
+            
+	            Python常用技巧
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/Python开发">
+            Python开发
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Python" title="Python">
+                        Python
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/10/01</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h4 id="1-1拆箱"><a href="#1-1拆箱" class="headerlink" title="1.1拆箱"></a>1.1拆箱</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a,b,c = 1,2,3</span><br><span class="line">&gt;&gt;&gt; a,b,c</span><br><span class="line">(1,2,3)</span><br><span class="line">&gt;&gt;&gt; a,b,c = [1,2,3]</span><br><span class="line">&gt;&gt;&gt; a,b,c</span><br><span class="line">[1,2,3]</span><br><span class="line">&gt;&gt;&gt; a,b,c = (2*i+1 in range(3))</span><br><span class="line">&gt;&gt;&gt; a,b,c</span><br><span class="line">(1,3,5)</span><br><span class="line">&gt;&gt;&gt; a,(b,c),d = [1,(2,3),4]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; c</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; d</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h4 id="1-2拆箱变量交换"><a href="#1-2拆箱变量交换" class="headerlink" title="1.2拆箱变量交换"></a>1.2拆箱变量交换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a,b = 1,2</span><br><span class="line">&gt;&gt;&gt; a,b = b,a</span><br><span class="line">&gt;&gt;&gt; a,b</span><br><span class="line">(2,1)</span><br></pre></td></tr></table></figure>
+<h4 id="1-3扩展拆箱（只兼容Python3）"><a href="#1-3扩展拆箱（只兼容Python3）" class="headerlink" title="1.3扩展拆箱（只兼容Python3）"></a>1.3扩展拆箱（只兼容Python3）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a,*b,c = [1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">[2,3,4]</span><br><span class="line">&gt;&gt;&gt; c</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+<h4 id="1-4-切割列表"><a href="#1-4-切割列表" class="headerlink" title="1.4 切割列表"></a>1.4 切割列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [0,1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">&gt;&gt;&gt; a[2:8]</span><br><span class="line">[2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
+<h4 id="1-5-负数索引切割列表"><a href="#1-5-负数索引切割列表" class="headerlink" title="1.5 负数索引切割列表"></a>1.5 负数索引切割列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [0,1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">&gt;&gt;&gt; a[-4,-2]</span><br><span class="line">[7,8]</span><br></pre></td></tr></table></figure>
+<h4 id="1-6指定步长切割列表"><a href="#1-6指定步长切割列表" class="headerlink" title="1.6指定步长切割列表"></a>1.6指定步长切割列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [0,1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">&gt;&gt;&gt; a[::2]</span><br><span class="line">[0,2,4,6,8,10]</span><br><span class="line">&gt;&gt;&gt; a[::3]</span><br><span class="line">[0,3,6,9]</span><br><span class="line">&gt;&gt;&gt; a[2:8:2]</span><br><span class="line">[2,4,6]</span><br></pre></td></tr></table></figure>
+<h4 id="1-7负数步长切割列表"><a href="#1-7负数步长切割列表" class="headerlink" title="1.7负数步长切割列表"></a>1.7负数步长切割列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [0,1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">&gt;&gt;&gt; a =[::-1]</span><br><span class="line">[10,9,8,7,6,5,4,3,2,1,0]</span><br><span class="line">&gt;&gt;&gt; a[::-2]</span><br><span class="line">[10,8,6,4,2,0]</span><br></pre></td></tr></table></figure>
+<h4 id="1-8列表切割赋值"><a href="#1-8列表切割赋值" class="headerlink" title="1.8列表切割赋值"></a>1.8列表切割赋值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt; a[2:3] = [0,0]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,2,0,0,4,5]</span><br><span class="line">&gt;&gt;&gt; a[1:1] = [8,9]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,8,9,2,0,0,4,5]</span><br><span class="line">&gt;&gt;&gt; a[1:-1] = []</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,5]</span><br></pre></td></tr></table></figure>
+<h4 id="1-9-命名列表切割方式"><a href="#1-9-命名列表切割方式" class="headerlink" title="1.9 命名列表切割方式"></a>1.9 命名列表切割方式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [0,1,2,3,4,5]</span><br><span class="line">&gt;&gt;&gt; LASTTHERE = slice(-3,None)</span><br><span class="line">&gt;&gt;&gt; LASTTHERE</span><br><span class="line">slice(-3,None,None)</span><br><span class="line">&gt;&gt;&gt; a [LASTTHERE]</span><br><span class="line">[3,4,5]</span><br></pre></td></tr></table></figure>
+<h4 id="1-10-列表以及迭代器的压缩和解压缩"><a href="#1-10-列表以及迭代器的压缩和解压缩" class="headerlink" title="1.10 列表以及迭代器的压缩和解压缩"></a>1.10 列表以及迭代器的压缩和解压缩</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [1,2,3]</span><br><span class="line">&gt;&gt;&gt; b = [&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]</span><br><span class="line">&gt;&gt;&gt; z = zip(a,b)</span><br><span class="line">&gt;&gt;&gt; z</span><br><span class="line">[(1,&apos;a&apos;),(2,&apos;b&apos;),(3,&apos;c&apos;)]</span><br><span class="line">&gt;&gt;&gt; zip(*z)</span><br><span class="line">[(1,2,3),(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)]</span><br></pre></td></tr></table></figure>
+<h4 id="1-11-列表相邻元素压缩器"><a href="#1-11-列表相邻元素压缩器" class="headerlink" title="1.11 列表相邻元素压缩器"></a>1.11 列表相邻元素压缩器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [1,2,3,4,5,6]</span><br><span class="line">&gt;&gt;&gt; zip(*([iter(a)]*2))</span><br><span class="line">[(1,2),(3,4),(5,6)]</span><br><span class="line">&gt;&gt;&gt; group_adjacent = lambda a, k: zip(*([iter(a)]*k))</span><br><span class="line">&gt;&gt;&gt; group_adjacent(a,3)</span><br><span class="line">[(1,2,3),(4,5,6)]</span><br><span class="line">&gt;&gt;&gt; group_adjacent(a,1)</span><br><span class="line">[(1,),(2,),(3,),(4,),(5,),(6,)]</span><br><span class="line">&gt;&gt;&gt; zip(a[::2],a[1::3],a[2::3])</span><br><span class="line">[(1, 2, 3), (4, 5, 6)]</span><br><span class="line">&gt;&gt;&gt; group_adjacent = lambda a,k:zip(*(a[i:k] for i in range(k)))</span><br><span class="line">&gt;&gt;&gt; group_adjacent(a,3)</span><br><span class="line">[(1, 2, 3), (4, 5, 6)]</span><br><span class="line">&gt;&gt;&gt; group_adjacent(a,2)</span><br><span class="line">[(1, 2), (3, 4), (5, 6)]</span><br><span class="line">&gt;&gt;&gt; group_adjacent(a, 1)</span><br><span class="line">[(1,), (2,), (3,), (4,), (5,), (6,)]</span><br></pre></td></tr></table></figure>
+<h4 id="1-12-在列表中用压缩器和迭代器滑动取值窗口"><a href="#1-12-在列表中用压缩器和迭代器滑动取值窗口" class="headerlink" title="1.12 在列表中用压缩器和迭代器滑动取值窗口"></a>1.12 在列表中用压缩器和迭代器滑动取值窗口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; def n_grams(a, n):</span><br><span class="line">...     z = [iter(a[i:]) for i in range(n)]</span><br><span class="line">...     return zip(*z)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]</span><br><span class="line">&gt;&gt;&gt; n_grams(a, 3)</span><br><span class="line">[(1, 2, 3), (2, 3, 4), (3, 4, 5), (4, 5, 6)]</span><br><span class="line">&gt;&gt;&gt; n_grams(a, 2)</span><br><span class="line">[(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)]</span><br><span class="line">&gt;&gt;&gt; n_grams(a, 4)</span><br><span class="line">[(1, 2, 3, 4), (2, 3, 4, 5), (3, 4, 5, 6)]</span><br></pre></td></tr></table></figure>
+<h4 id="1-13-用压缩器反转字典"><a href="#1-13-用压缩器反转字典" class="headerlink" title="1.13 用压缩器反转字典"></a>1.13 用压缩器反转字典</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; m = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4&#125;</span><br><span class="line">&gt;&gt;&gt; m.items()</span><br><span class="line">[(&apos;a&apos;, 1), (&apos;c&apos;, 3), (&apos;b&apos;, 2), (&apos;d&apos;, 4)]</span><br><span class="line">&gt;&gt;&gt; zip(m.values(), m.keys())</span><br><span class="line">[(1, &apos;a&apos;), (3, &apos;c&apos;), (2, &apos;b&apos;), (4, &apos;d&apos;)]</span><br><span class="line">&gt;&gt;&gt; mi = dict(zip(m.values(), m.keys()))</span><br><span class="line">&gt;&gt;&gt; mi</span><br><span class="line">&#123;1: &apos;a&apos;, 2: &apos;b&apos;, 3: &apos;c&apos;, 4: &apos;d&apos;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-14-列表的展开"><a href="#1-14-列表的展开" class="headerlink" title="1.14 列表的展开"></a>1.14 列表的展开</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = [[1, 2], [3, 4], [5, 6]]</span><br><span class="line">&gt;&gt;&gt; list(itertools.chain.from_iterable(a))</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br><span class="line">&gt;&gt;&gt; sum(a, [])</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br><span class="line">&gt;&gt;&gt; [x for l in a for x in l]</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
+<h4 id="1-15-生成器表达式"><a href="#1-15-生成器表达式" class="headerlink" title="1.15 生成器表达式"></a>1.15 生成器表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; g = (x ** 2 for x in xrange(10))</span><br><span class="line">&gt;&gt;&gt; next(g)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; next(g)</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; next(g)</span><br><span class="line">4</span><br><span class="line">&gt;&gt;&gt; next(g)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; sum(x ** 3 for x in xrange(10))</span><br><span class="line">2025</span><br><span class="line">&gt;&gt;&gt; sum(x ** 3 for x in xrange(10) if x % 3 == 1)</span><br><span class="line">408</span><br></pre></td></tr></table></figure>
+<h4 id="1-16-字典推导式"><a href="#1-16-字典推导式" class="headerlink" title="1.16 字典推导式"></a>1.16 字典推导式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; m = &#123;x: x ** 2 for x in range(5)&#125;</span><br><span class="line">&gt;&gt;&gt; m</span><br><span class="line">&#123;0: 0, 1: 1, 2: 4, 3: 9, 4: 16&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; m = &#123;x: &apos;A&apos; + str(x) for x in range(10)&#125;</span><br><span class="line">&gt;&gt;&gt; m</span><br><span class="line">&#123;0: &apos;A0&apos;, 1: &apos;A1&apos;, 2: &apos;A2&apos;, 3: &apos;A3&apos;, 4: &apos;A4&apos;, 5: &apos;A5&apos;, 6: &apos;A6&apos;, 7: &apos;A7&apos;, 8: &apos;A8&apos;, 9: &apos;A9&apos;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-17-字典反转推导式"><a href="#1-17-字典反转推导式" class="headerlink" title="1.17 字典反转推导式"></a>1.17 字典反转推导式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; m = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3, &apos;d&apos;: 4&#125;</span><br><span class="line">&gt;&gt;&gt; m</span><br><span class="line">&#123;&apos;d&apos;: 4, &apos;a&apos;: 1, &apos;b&apos;: 2, &apos;c&apos;: 3&#125;</span><br><span class="line">&gt;&gt;&gt; &#123;v: k for k, v in m.items()&#125;</span><br><span class="line">&#123;1: &apos;a&apos;, 2: &apos;b&apos;, 3: &apos;c&apos;, 4: &apos;d&apos;&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/categories/14e6f1eb.html" class="pre-post btn btn-default" title="冒泡排序">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">冒泡排序</span>
+        </a>
+    
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1拆箱"><span class="toc-text">1.1拆箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2拆箱变量交换"><span class="toc-text">1.2拆箱变量交换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3扩展拆箱（只兼容Python3）"><span class="toc-text">1.3扩展拆箱（只兼容Python3）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-切割列表"><span class="toc-text">1.4 切割列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-负数索引切割列表"><span class="toc-text">1.5 负数索引切割列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6指定步长切割列表"><span class="toc-text">1.6指定步长切割列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-7负数步长切割列表"><span class="toc-text">1.7负数步长切割列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-8列表切割赋值"><span class="toc-text">1.8列表切割赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-9-命名列表切割方式"><span class="toc-text">1.9 命名列表切割方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-10-列表以及迭代器的压缩和解压缩"><span class="toc-text">1.10 列表以及迭代器的压缩和解压缩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-11-列表相邻元素压缩器"><span class="toc-text">1.11 列表相邻元素压缩器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-12-在列表中用压缩器和迭代器滑动取值窗口"><span class="toc-text">1.12 在列表中用压缩器和迭代器滑动取值窗口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-13-用压缩器反转字典"><span class="toc-text">1.13 用压缩器反转字典</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-14-列表的展开"><span class="toc-text">1.14 列表的展开</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-15-生成器表达式"><span class="toc-text">1.15 生成器表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-16-字典推导式"><span class="toc-text">1.16 字典推导式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-17-字典反转推导式"><span class="toc-text">1.17 字典反转推导式</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
