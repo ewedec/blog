@@ -195,16 +195,16 @@
     <div class="post-body post-content">
         <h4 id="第一部分-查找名称查找文件的基本查找命令"><a href="#第一部分-查找名称查找文件的基本查找命令" class="headerlink" title="第一部分:查找名称查找文件的基本查找命令"></a>第一部分:查找名称查找文件的基本查找命令</h4><ul>
 <li><p>1.使用当前目录中的名称查找文件<br>在当前工作目录中查找名称为test.c的所有文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; find test.c</span><br><span class="line">test.c</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;find test.c</span><br><span class="line">test.c</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>2.在主目录下查找文件<br>查找/home目录下的所有文件，名称为test。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; find /home -name test</span><br><span class="line"># 无权限目录不进行查找</span><br><span class="line">/home/neil/Code/test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;find /home -name test</span><br><span class="line">#无权限目录不进行查找</span><br><span class="line">/home/neil/Code/test</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>3.使用名称或忽略案例查找文件<br>找到名称为test的所有文件，并在/home目录中同时包含大写和小写字母。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; find /home -iname test</span><br><span class="line"># -i 忽略大小写</span><br><span class="line">/home/neil/Code/test</span><br><span class="line">/home/neil/Code/Test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;find /home -iname test</span><br><span class="line">#-i 忽略大小写</span><br><span class="line">/home/neil/Code/test</span><br><span class="line">/home/neil/Code/Test</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>4.使用名称按类型查找<br>在/目录中查找名称为test的所有目录。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; find / -type d -name test</span><br><span class="line">```  </span><br><span class="line">在当前文件中查找名称为test.php的文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;find / -type d -name test</span><br><span class="line">```  </span><br><span class="line">在当前文件中查找名称为test.php的文件</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -221,7 +221,7 @@
 </blockquote>
 </blockquote>
 </blockquote>
-<h1 id="print-格式化输出在文件的名前面加"><a href="#print-格式化输出在文件的名前面加" class="headerlink" title="-print 格式化输出在文件的名前面加./"></a>-print 格式化输出在文件的名前面加./</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查找所有文件没有777权限的文件</span><br></pre></td></tr></table></figure>
+<p>#-print 格式化输出在文件的名前面加./<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查找所有文件没有777权限的文件</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -250,7 +250,13 @@
 </blockquote>
 </blockquote>
 </blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
 <p>find / -perm /u=r<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 10.查找可执行文件  </span><br><span class="line">查找所有可执行文件</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+</blockquote>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -265,7 +271,9 @@
 </blockquote>
 </blockquote>
 </blockquote>
-<h1 id="exec-将前面产生的结果当成参数一个一个的传给后面的命令执行"><a href="#exec-将前面产生的结果当成参数一个一个的传给后面的命令执行" class="headerlink" title="-exec 将前面产生的结果当成参数一个一个的传给后面的命令执行"></a>-exec 将前面产生的结果当成参数一个一个的传给后面的命令执行</h1><h1 id="args-将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用-n指定个数"><a href="#args-将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用-n指定个数" class="headerlink" title="-args 将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用 -n指定个数"></a>-args 将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用 -n指定个数</h1><h1 id="前面命令的标准输出，当成后面命令的标准输入"><a href="#前面命令的标准输出，当成后面命令的标准输入" class="headerlink" title="| 前面命令的标准输出，当成后面命令的标准输入"></a>| 前面命令的标准输出，当成后面命令的标准输入</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 12.找到具有777的权限的目录和chmod到755  </span><br><span class="line">查找所有777的权限的目录，并使chmod 命令将权限设置为755</span><br></pre></td></tr></table></figure>
+<p>#-exec 将前面产生的结果当成参数一个一个的传给后面的命令执行</p>
+<p>#-args 将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用 -n指定个数</p>
+<p>#|前面命令的标准输出，当成后面命令的标准输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 12.找到具有777的权限的目录和chmod到755  </span><br><span class="line">查找所有777的权限的目录，并使chmod 命令将权限设置为755</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -450,9 +458,9 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一部分-查找名称查找文件的基本查找命令"><span class="toc-text">第一部分:查找名称查找文件的基本查找命令</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#print-格式化输出在文件的名前面加"><span class="toc-text">-print 格式化输出在文件的名前面加./</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exec-将前面产生的结果当成参数一个一个的传给后面的命令执行"><span class="toc-text">-exec 将前面产生的结果当成参数一个一个的传给后面的命令执行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#args-将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用-n指定个数"><span class="toc-text">-args 将前面产生的结果当成参数一次性穿个后面的命令执行，不过可以用 -n指定个数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前面命令的标准输出，当成后面命令的标准输入"><span class="toc-text">| 前面命令的标准输出，当成后面命令的标准输入</span></a>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一部分-查找名称查找文件的基本查找命令"><span class="toc-text">第一部分:查找名称查找文件的基本查找命令</span></a></li></ol>
         
-    </li></div>
+    </div>
 </aside>
 
                 
