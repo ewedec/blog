@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="超哥博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://ewedwc.github.io">
+    <!--SEO-->
+
+
+
+<meta name="keywords" content="超哥个人博客是记录超哥在技术学习中遇到的点点滴滴的问题，让后学者不再遇到同样的坑，超哥不做技术的讲授者，只做技术的踩坑者，这里我将为你提供Linux、Python、数据库、运维等相关方面的知识。">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>HTTPS协议详解一 | 超哥博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Dingchao.Wu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ewedwc.github.io">超哥博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux基础/"><i class="fa "></i>Linux基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python开发/"><i class="fa "></i>Python开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/数据库/"><i class="fa "></i>数据库</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/运维之路/"><i class="fa "></i>运维之路</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="HTTPS协议详解一">
+            
+	            HTTPS协议详解一
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/Linux基础">
+            Linux基础
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Linux" title="Linux">
+                        Linux
+                    </a>
+                
+                    <a href="/tags/网络协议" title="网络协议">
+                        网络协议
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/08/16</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h4 id="HTTPS协议概述"><a href="#HTTPS协议概述" class="headerlink" title="HTTPS协议概述"></a>HTTPS协议概述</h4><ul>
+<li>HTTPS可以认为是HTTP+TLS。</li>
+<li>HTTP协议大家耳熟能详了，目前大部分WEB应用和网站都是使用HTTP协议传输的。TLS是传输层加密协议，它的前身是SSL协议，最早由Netscape公司于1995年发布，1999年经过IETF讨论和规范后，改名为TLS。如果没有特别说明，SSL和TLS说的都是同一个协议。HTTP和TLS在协议层的位置以及TLS协议的组成如下图：<br><img src="/img/HTTPS.jpg" alt=""></li>
+<li>TLS协议主要有五部分：应用数据层协议，握手协议，报警协议，加密消息确认协议，心跳协议<br>TLS协议本身又是由Record协议传输的，Record协议的格式如上图最右所示。<br>目前常用的HTTP协议是HTTP1.1，常用的TLS协议版本有如下几个：TLS1.3，TLS1.2,TLS1.1,TLS1.0和SSL3.0。其中SSL3.0由于POODLE攻击已经被证明不安全，但统计发现依然有不到1%的浏览器使用SSL3.0。TLS1.0也存在部分安全漏洞，比如RC4和BEAST攻击。过去由于主流Web浏览器和应用程序中的TLS实现都支持降级协商过程，导致即使服务器支持最新版本，攻击者也有机会利用较弱的协议实施攻击。因此到2020年，所有主流Web浏览器都将取消TLS1.0和TLS1.1的支持。<br>TLS1.2暂时没有已知的安全漏洞，比较安全，同时有大量扩展提升速度和性能，当前被较为普遍的使用。<br>需要关注一点的就是TLS1.3是TLS协议一个非常重大的改革。不管是安全性还是用户访问速度都会有质的提升。TLS1.3协议的最终版本（RFC8446）已于2018年8月10日发布，各主流浏览器也逐渐支持TLS1.3。<br>同时HTTP2也于2015年5月正式定稿（RFC7540），这个由SPDY协议演化而来的协议相比HTTP1.1又是一个非常重大的变动，能够明显提升应用层数据的传输效率。</li>
+</ul>
+<h4 id="HTTPS功能介绍"><a href="#HTTPS功能介绍" class="headerlink" title="HTTPS功能介绍"></a>HTTPS功能介绍</h4><ul>
+<li>1.内容加密。浏览器到服务器的内容都是以加密形式传输，中间者无法直接查看原始内容；</li>
+<li>2.身份认证。保证用户访问的是百度服务，即使被DNS劫持到了第三方站点，也会提醒用户没有访问百度服务，有可能被劫持；</li>
+<li>3.数据完整性。防止内容被第三方冒充或者篡改。<h4 id="HTTPS原理介绍"><a href="#HTTPS原理介绍" class="headerlink" title="HTTPS原理介绍"></a>HTTPS原理介绍</h4></li>
+<li>1.内容加密<br>&emsp;&emsp;加密算法一般分为两种，对称加密和非对称加密。所谓对称加密（也叫密钥加密）就是指加密和解密使用的是相同的密钥。而非对称加密（也叫公钥加密）就是指加密和解密使用了不同的密钥。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mermaid</span><br><span class="line">graph LR</span><br><span class="line">       A[Baidu https] -. 加密 .-&gt; B((密文 saddas)) -. 解密 .-&gt; C[Baidu https]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mermaid</span><br><span class="line">graph LR</span><br><span class="line">       A[Baidu https] -. 加密(密钥A) .-&gt; B((密文 saddas)) -. 解密（密钥B） .-&gt; C[Baidu https]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对称内容加密强度非常高，一般破解不了。但存在一个很大的问题就是无法安全地生成和保管密钥。假如客户端软件和服务器之间每次会话都使用固定的、相同的密钥加密和解密，肯定存在很大的安全隐患。如果有人从客户端获取到了对称密钥，整个内容就不存在安全性了，而且管理海量的客户端密钥也是一件很复杂的事情。  </li>
+<li>非对称加密主要用于密钥交换（也叫密钥协商），能够很好地解决这个问题。浏览器和服务器每次新建会话时都使用非对称密钥交换算法协商出对称密钥，使用这些对称密钥完成应用数据的加解密和验证，整个会话过程中的密钥只在内存中生成和保存，而且每个会话的对称密钥都不相同（除非会话复用），中间者无法窃取。  </li>
+<li>非对称密钥交换很安全，但同时也是HTTPS性能和速度严重降低的“罪魁祸首”。想要知道HTTPS为什么影响速度，为什么消耗资源，就一定要理解非对称密钥交换的整个过程。<br>-下面重点介绍一下非对称密钥交换的数学原理及在TLS握手过程中的应用。</li>
+<li>2.非对称密钥交换  <ul>
+<li>在非对称密钥交换算法出现以前，对称加密一个很大的问题就是不知道如何安全生成和保管密钥。非对称密钥交换过程主要就是为了解决这个问题，使得对称密钥的生成和使用更加安全。</li>
+<li>密钥交换算法本身非常复杂，密钥交换过程涉及到随机数生成，模指数运算，空白补齐，加密，签名等操作。</li>
+</ul>
+</li>
+<li>常见的密钥交换算法有RSA，ECDHE，DH，DHE等算法。它们的特性如下：</li>
+<li>RSA：算法实现简单，诞生于1977年，历史悠久，经过了长时间的破解测试，安全性高。缺点就是需要比较大的素数（目前常用的是2048位）来保证安全强度，很消耗CPU运算资源。RSA是目前唯一一个既能用于密钥交换又能用于证书签名的算法。</li>
+<li>DH：Diffie-Hellman密钥交换算法，诞生时间比较早（1977年），但是1999年才公开。缺点是比较消耗CPU性能。</li>
+<li>ECDHE：使用椭圆曲线（ECC）的DH算法，优点是能用较小的素数（256位）实现RSA相同的安全等级。缺点是算法实现复杂，用于密钥交换的历史不长，没有经过长时间的安全攻击测试。</li>
+<li>ECDH：不支持PFS，安全性低，同时无法实现False Start。</li>
+<li>DHE：不支持ECC。非常消耗CPU资源。</li>
+</ul>
+<p>建议优先支持RSA和ECDH_RSA密钥交换算法。原因是：</p>
+<ul>
+<li>ECDHE支持ECC加速，计算速度更快。支持PFS，更加安全。支持False Start，用户访问速度更快。</li>
+<li>目前还有至少20%以上的客户端不支持ECDHE，我们推荐使用RSA而不是DH或者DHE，因为DH系列算法非常消耗CPU（相当于要做两次RSA计算）。</li>
+</ul>
+<p>非对称加密相比对称加密更加安全，但也存在两个明显缺点：</p>
+<ul>
+<li>CPU计算资源消耗非常大。一次完全TLS握手，密钥交换时的非对称解密计算量占整个握手过程的90%以上。而对称加密的计算量只相当于非对称加密的0.1%，如果应用层数据也使用非对称加解密，性能开销太大，无法承受。</li>
+<li>非对称加密算法对加密内容的长度有限制，不能超过公钥长度。比如现在常用的公钥长度是2048位，意味着待加密内容不能超过256个字节。</li>
+<li>所以公钥加密目前只能用来作密钥交换或者内容签名，不适合用来做应用层传输内容的加解密。</li>
+<li>非对称密钥交换算法是整个HTTPS得以安全的基石，充分理解非对称密钥交换算法是理解HTTPS协议和功能的关键。</li>
+</ul>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/categories/da44e512.html" class="pre-post btn btn-default" title="Linux中find命令用法全汇总">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Linux中find命令用法全汇总</span>
+        </a>
+    
+    
+        <a href="/categories/a4ff7c5d.html" class="next-post btn btn-default" title="Python算法之线性表">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Python算法之线性表</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTPS协议概述"><span class="toc-text">HTTPS协议概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTPS功能介绍"><span class="toc-text">HTTPS功能介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTPS原理介绍"><span class="toc-text">HTTPS原理介绍</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
