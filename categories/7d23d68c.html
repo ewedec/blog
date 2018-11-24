@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="超哥博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://ewedwc.github.io">
+    <!--SEO-->
+
+
+
+<meta name="keywords" content="超哥个人博客是记录超哥在技术学习中遇到的点点滴滴的问题，让后学者不再遇到同样的坑，超哥不做技术的讲授者，只做技术的踩坑者，这里我将为你提供Linux、Python、数据库、运维等相关方面的知识。">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>MySQL存储引擎详解 | 超哥博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Dingchao.Wu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ewedwc.github.io">超哥博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux基础/"><i class="fa "></i>Linux基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python开发/"><i class="fa "></i>Python开发</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/数据库/"><i class="fa "></i>数据库</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/运维之路/"><i class="fa "></i>运维之路</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="MySQL存储引擎详解">
+            
+	            MySQL存储引擎详解
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/数据库">
+            数据库
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/MySQL" title="MySQL">
+                        MySQL
+                    </a>
+                
+                    <a href="/tags/关系型数据库" title="关系型数据库">
+                        关系型数据库
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/09/19</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h4 id="什么是存储引擎？"><a href="#什么是存储引擎？" class="headerlink" title="什么是存储引擎？"></a>什么是存储引擎？</h4><p>&emsp;&emsp;与其他数据库例如Oracle 和SQL Server等数据库中只有一种存储引擎不同的是，MySQL有一个被称为“Pluggable Storage Engine Architecture”(可替换存储引擎架构)的特性，也就意味着MySQL数据库提供了多种存储引擎。用户可以根据不同的需求为数据表选择不同的存储引擎，用户也可以根据自己的需要编写自己的存储引擎。MySQL数据库在实际的工作中其实分为了语句分析层和存储引擎层，其中语句分析层就主要负责与客户端完成连接并且事先分析出SQL语句的内容和功能，而存储引擎层则主要负责接收来自语句分析层的分析结果，完成相应的数据输入输出和文件操作。简而言之，就是如何存储数据、如何为存储的数据建立索引和如何更新、查询数据等技术的实现方法。因为在关系数据库中数据的存储是以表的形式存储的，所以存储引擎也可以称为表类型（即存储和操作此表的类型）。</p>
+<h4 id="MySQL存储引擎种类"><a href="#MySQL存储引擎种类" class="headerlink" title="MySQL存储引擎种类"></a>MySQL存储引擎种类</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">存储引擎</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">MyISAM</td>
+<td style="text-align:center">高速引擎，拥有较高的插入，查询速度，但不支持事务</td>
+</tr>
+<tr>
+<td style="text-align:center">InnoDB</td>
+<td style="text-align:center">5.5版本后MySQL的默认数据库，支持事务和行级锁定，比MyISAM处理速度稍慢</td>
+</tr>
+<tr>
+<td style="text-align:center">ISAM</td>
+<td style="text-align:center">MyISAM的前身，MySQL5.0以后不再默认安装</td>
+</tr>
+<tr>
+<td style="text-align:center">MRG_MyISAM（MERGE）</td>
+<td style="text-align:center">将多个表联合成一个表使用，在超大规模数据存储时很有用</td>
+</tr>
+<tr>
+<td style="text-align:center">Memory</td>
+<td style="text-align:center">内存存储引擎，拥有极高的插入，更新和查询效率。但是会占用和数据量成正比的内存空间。只在内存上保存数据，意味着数据可能会丢失</td>
+</tr>
+<tr>
+<td style="text-align:center">Falcon</td>
+<td style="text-align:center">一种新的存储引擎，支持事物处理，传言可能是InnoDB的替代者</td>
+</tr>
+<tr>
+<td style="text-align:center">Archive</td>
+<td style="text-align:center">将数据压缩后进行存储，非常适合存储大量的独立的，作为历史记录的数据，但是只能进行插入和查询操作</td>
+</tr>
+<tr>
+<td style="text-align:center">CSV</td>
+<td style="text-align:center">CSV 存储引擎是基于 CSV 格式文件存储数据(应用于跨平台的数据交换)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="MyISAM-引擎"><a href="#MyISAM-引擎" class="headerlink" title="MyISAM 引擎"></a>MyISAM 引擎</h4><p>&emsp;&emsp;这种引擎是MySQL最早提供的。这种引擎又可以分为静态MyISAM、动态MyISAM 和压缩MyISAM三种：</p>
+<ul>
+<li><p>静态MyISAM：如果数据表中的各数据列的长度都是预先固定好的，服务器将自动选择这种表类型。因为数据表中每一条记录所占用的空间都是一样的，所以这种表存取和更新的效率非常高。当数据受损时，恢复工作也比较容易做。  </p>
+</li>
+<li><p>动态MyISAM：如果数据表中出现varchar、xxxtext或xxxBLOB字段时，服务器将自动选择这种表类型。相对于静态MyISAM，这种表存储空间比较小，但由于每条记录的长度不一，所以多次修改数据后，数据表中的数据就可能离散的存储在内存中，进而导致执行效率下降。同时，内存中也可能会出现很多碎片。因此，这种类型的表要经常用optimize table 命令或优化工具来进行碎片整理。</p>
+<ul>
+<li>mysql&gt; optimize table t1; #命令</li>
+<li>优化工具:SQLAdvisor 项目 GitHub 地址：<a href="https://github.com/Meituan-Dianping/SQLAdvisor" target="_blank" rel="noopener">https://github.com/Meituan-Dianping/SQLAdvisor</a>  </li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>压缩MyISAM：以上说到的两种类型的表都可以用myisamchk工具压缩。这种类型的表进一步减小了占用的存储，但是这种表压缩之后不能再被修改。另外，因为是压缩数据，所以这种表在读取的时候要先时行解压缩。</li>
+</ul>
+<p>&emsp;&emsp;当然不管是何种MyISAM表，目前它都不支持事务，行级锁和外键约束的功能，这就意味着有事务处理需求的表，不能使用MyISAM存储引擎。MyISAM存储引擎特别适合在以下几种情况下使用：  </p>
+<ul>
+<li>选择密集型的表。MyISAM存储引擎在筛选大量数据时非常迅速，这是它最突出的优点。</li>
+<li>插入密集型的表。MyISAM的并发插入特性允许同时选择和插入数据。  </li>
+</ul>
+<p>&emsp;&emsp;MyISAM表是独立于操作系统的，这说明可以轻松地将其从Windows服务器移植到Linux服务器；每当我们建立一个MyISAM引擎的表时，就会在本地磁盘上建立三个文件，文件名就是表名。 例如我创建了一个【test】表，那么就会生成以下三个文件：<br>|  文件名  |    说明    |<br>|:——–:|:———-:|<br>| test.frm | 存储表定义 |<br>| test.MYD |  存储数据  |<br>| test.MYI |  存储索引 |</p>
+<h4 id="InnoDB-引擎"><a href="#InnoDB-引擎" class="headerlink" title="InnoDB 引擎"></a>InnoDB 引擎</h4><p>  &emsp;&emsp;InnoDB表类型可以看作是对MyISAM的进一步更新产品，它提供了事务、行级锁机制和外键约束的功能。InnoDB的表需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引。<br>  &emsp;&emsp;使用InnoDB是最理想的选择：  </p>
+<ul>
+<li>更新密集的表：InnoDB存储引擎特别适合处理多重并发的更新请求。  </li>
+<li>事务：InnoDB存储引擎是支持事务的标准MySQL存储引擎。  </li>
+<li>自动灾难恢复：与其它存储引擎不同，InnoDB表能够自动从灾难中恢复。  </li>
+<li>外键约束：MySQL支持外键的存储引擎只有InnoDB。  </li>
+<li>支持自动增加列AUTO_INCREMENT属性。  </li>
+</ul>
+<h4 id="存储引擎操作"><a href="#存储引擎操作" class="headerlink" title="存储引擎操作"></a>存储引擎操作</h4><ul>
+<li>查看存储引擎<br>想要查看我们的数据表使用了什么存储引擎，我们就需要使用到我们以前已经介绍过的【show】命令，语法如下：  <blockquote>
+<p>SHOW CREATE TABLE 表名;</p>
+</blockquote>
+</li>
+<li>存储引擎变更<br>变更我们存储表的存储引擎将使用到的是我们前面使用过的【ALTER】命令，语法如下：<blockquote>
+<p>ALTER TABLE 表名 ENGINE=新引擎;</p>
+</blockquote>
+</li>
+<li>修改默认引擎<br>要使用事务功能，就必须将表设置为InnoDB引擎，有的版本在安装时，是未激活InnoDB引擎的，所以需要我们手动进行激活。首先我们进入MySQL的安装目录，找到my.ini文件。修改【default-storage-engine】这一行，将其修改为【default-storage-engine=InnoDB】即可，我们就成功的将默认的引擎修改为【InnoDB】</li>
+</ul>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/categories/ed00236b.html" class="pre-post btn btn-default" title="Python常用技巧">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Python常用技巧</span>
+        </a>
+    
+    
+        <a href="/categories/da44e512.html" class="next-post btn btn-default" title="Linux中find命令用法全汇总">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Linux中find命令用法全汇总</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是存储引擎？"><span class="toc-text">什么是存储引擎？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL存储引擎种类"><span class="toc-text">MySQL存储引擎种类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM-引擎"><span class="toc-text">MyISAM 引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-引擎"><span class="toc-text">InnoDB 引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储引擎操作"><span class="toc-text">存储引擎操作</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
