@@ -122,6 +122,10 @@
                             </li>
                         
                             <li role="presentation" class="text-center">
+                                <a href="/categories/算法与数学之美/"><i class="fa "></i>算法与数学之美</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
                                 <a href="/categories/工具/"><i class="fa "></i>工具</a>
                             </li>
                         
@@ -259,7 +263,29 @@
 <li>选择密集型的表。MyISAM存储引擎在筛选大量数据时非常迅速，这是它最突出的优点。</li>
 <li>插入密集型的表。MyISAM的并发插入特性允许同时选择和插入数据。  </li>
 </ul>
-<p>&emsp;&emsp;MyISAM表是独立于操作系统的，这说明可以轻松地将其从Windows服务器移植到Linux服务器；每当我们建立一个MyISAM引擎的表时，就会在本地磁盘上建立三个文件，文件名就是表名。 例如我创建了一个【test】表，那么就会生成以下三个文件：<br>|  文件名  |    说明    |<br>|:——–:|:———-:|<br>| test.frm | 存储表定义 |<br>| test.MYD |  存储数据  |<br>| test.MYI |  存储索引 |</p>
+<p>&emsp;&emsp;MyISAM表是独立于操作系统的，这说明可以轻松地将其从Windows服务器移植到Linux服务器；每当我们建立一个MyISAM引擎的表时，就会在本地磁盘上建立三个文件，文件名就是表名。 例如我创建了一个【test】表，那么就会生成以下三个文件：  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">test.frm</td>
+<td style="text-align:center">存储表定义</td>
+</tr>
+<tr>
+<td style="text-align:center">test.MYD</td>
+<td style="text-align:center">存储数据</td>
+</tr>
+<tr>
+<td style="text-align:center">test.MYI</td>
+<td style="text-align:center">存储索引</td>
+</tr>
+</tbody>
+</table>
 <h4 id="InnoDB-引擎"><a href="#InnoDB-引擎" class="headerlink" title="InnoDB 引擎"></a>InnoDB 引擎</h4><p>  &emsp;&emsp;InnoDB表类型可以看作是对MyISAM的进一步更新产品，它提供了事务、行级锁机制和外键约束的功能。InnoDB的表需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引。<br>  &emsp;&emsp;使用InnoDB是最理想的选择：  </p>
 <ul>
 <li>更新密集的表：InnoDB存储引擎特别适合处理多重并发的更新请求。  </li>
