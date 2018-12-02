@@ -29,7 +29,7 @@
     <!--Title-->
 
 
-<title>Docker基础 | 超哥博客</title>
+<title>Nginx服务详解 | 超哥博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
@@ -146,9 +146,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Docker基础">
+        <h1 id="Nginx服务详解">
             
-	            Docker基础
+	            Nginx服务详解
             
         </h1>
         <div class="post-meta">
@@ -168,8 +168,12 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/docker" title="docker">
-                        docker
+                    <a href="/tags/Linux" title="Linux">
+                        Linux
+                    </a>
+                
+                    <a href="/tags/服务" title="服务">
+                        服务
                     </a>
                 
             
@@ -181,7 +185,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2018/11/14</span>
+            <span class="date-meta">2018/12/02</span>
         </span>
         
             <span class="fa-wrap">
@@ -197,30 +201,23 @@
     </div>
     
     <div class="post-body post-content">
-        <h3 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1.安装Docker"></a>1.安装Docker</h3><ul>
-<li>linux安装Docker<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#安装curl命令</span><br><span class="line">sudo apt-get install curl</span><br><span class="line">#安装Docker</span><br><span class="line">curl -fsSl https://get.Docker.com |sh</span><br><span class="line">#检查Docker</span><br><span class="line">sudo docker version</span><br><span class="line">#将当前用户添加到docker组中免敲sudo命令</span><br><span class="line">sudo useradd -aG docker 当前用户名</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#使用不同的的源  </span><br><span class="line">官方源:  </span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -  </span><br><span class="line">add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) st able&quot;</span><br><span class="line">阿里云的源&#123;推荐&#125;  </span><br><span class="line">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -  </span><br><span class="line">add-apt-repository &quot;deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_relea se -cs) stable&quot;</span><br></pre></td></tr></table></figure>
+        <h4 id="Nginx服务详解"><a href="#Nginx服务详解" class="headerlink" title="Nginx服务详解"></a>Nginx服务详解</h4><h5 id="Nginx功能概述"><a href="#Nginx功能概述" class="headerlink" title="Nginx功能概述"></a>Nginx功能概述</h5><p>Nginx是一款自由的、开源的、高性能的HTTP服务器和反向代理服务器；同时也是一个IMAP、POP3、SMTP代理服务器；Nginx可以作为一个HTTP服务器进行网站的发布处理，另外nginx可以作为反向代理进行负载均衡的实现。</p>
 <ul>
-<li><p>Mac安装Docker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">官网下载Docker for Mac 进行安装</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Docker 删除</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get purge docke-ce -y</span><br><span class="line">rm -rf /var/lib/docer/</span><br><span class="line">rm - rf /etc/docker</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Docker加速器<br>&emsp;&emsp;在国内使用docker的官方镜像源，会因为网络的原因，造成无法下载，或者一直处于超时。所以我们使用 daocloud 的方法进行加速配置。</p>
-</li>
-</ul>
-<h3 id="2-Docker介绍"><a href="#2-Docker介绍" class="headerlink" title="2.Docker介绍"></a>2.Docker介绍</h3><ul>
-<li>Docker是什么<br>Docker是一个开源的容器引擎，它基于LXC（LXC又名Linux container，是一种虚拟化的解决方案，这种是内核级的虚拟化。(主流的解决方案Xen ,KVM, LXC)）容器技术，使用GO语言开发。遵循Apache2.0协议。<br>Docker采用C/S架构，其可以为任何应用创建一个轻量级、可移植的、自给自足的容器。Docker就是一种快速解决生产问题的一种技术手段。  </li>
-<li>Docker的特点  <ul>
-<li>三大理念：<br>构建:<br>&emsp;&emsp;将你需要的场景构建好，装在一个镜像中，就好比龙珠中的胶囊一样。<br>运输:<br>&emsp;&emsp;随身携带非常方便<br>运行:<br>&emsp;&emsp;只要在需要的地方一放，打开使用就OK了  </li>
-<li>优点:<br>&emsp;&emsp;多:   试用场景多<br>&emsp;&emsp;快:   环境部署快，更新快<br>&emsp;&emsp;好:   好多人在用，东西好<br>&emsp;&emsp;省:   省钱省力省人工  </li>
-<li>缺点:<br>&emsp;&emsp;太腻歪人:  依赖操作系统<br>&emsp;&emsp;不善于沟通: 依赖网络<br>&emsp;&emsp;无法使用外部硬件  </li>
+<li>关于代理<br>说到代理，首先我们要明确一个概念，所谓代理就是一个代表、一个渠道；<br>此时就设计到两个角色，一个是被代理角色，一个是目标角色，被代理角色通过这个代理访问目标角色完成一些任务的过程称为代理操作过程；如同生活中的专卖店～客人到adidas专卖店买了一双鞋，这个专卖店就是代理，被代理角色就是adidas厂家，目标角色就是用户。</li>
+<li>正向代理<br>正向代理也是大家最常接触到的代理模式，我们从两个方面来说关于正向代理的处理模式，分别从软件方面和生活方面来解释一下什么叫正向代理<br>在如今的网络环境下，我们如果由于技术需要要去访问国外的某些网站，此时你会发现位于国外的某网站我们通过浏览器是没有办法访问的，此时大家可能都会用一个操作FQ进行访问，FQ的方式主要是找到一个可以访问到国外网站的代理服务器，我们将请求发送给代理服务器，代理服务器访问国外的网站，然后将访问到的数据传递给我们！<br>上述这样的代理模式称为代理服务，正向代理最大的特点是客户端非常明确要访问的服务器地址；服务器只清楚请求来自那个代理服务器，而不清楚来自那个具体的客户端；正向代理模式屏蔽或者隐藏了真实客户端信息。</li>
+<li>反向代理<br>反向代理的处理方式，例如某宝网站，每天同时连接到网站的访问人数已经爆表，单个服务器远远不能满足人民日益增长的购买欲望了，此时就出现了一个大家耳熟能详的名词：分布式部署；就是通过部署多台服务器来解决访问人数限制的问题；某宝网站大部分功能也是直接使用nginx进行反向代理实现的，并通过封装nginx和其他组件之后起了个高大上的名字：Tengine，有兴趣的同学可以访问Tengine的官网查看具体的信息：<a href="http://tengine.taobao.org/。那么反向代理具体是通过什么样的方式实现的分布式的集群操作呢，我们先看一个示意图" target="_blank" rel="noopener">http://tengine.taobao.org/。那么反向代理具体是通过什么样的方式实现的分布式的集群操作呢，我们先看一个示意图</a>:<br><img src="/img/proxy.png" alt="avatar"><br>通过上述的图解大家就可以看清楚了，多个客户端给服务器发送的请求，Nginx服务器接收到之后，按照一定的规则分发给了后端的业务服务器进行处理了。此时～请求的来源也就是客户端是明确的，但是请求具体由那个服务器处理的并不明确了，Nginx扮演的就是一个反向代理角色<br>反向代理，主要用于服务器集群分布式部署的情况下，反向代理隐藏了服务器的信息！  </li>
+<li>项目场景<br>通常情况下，我们在实际项目操作时，正向代理和反向代理很有可能会存在在一个应用场景中，正向代理代理客户端的请求去访问目标服务器，目标服务器是一个反向单利服务器，反向代理了多台真实的业务处理服务器。具体的拓扑图如下：<br><img src="/img/proxy1.png" alt="avatar">  </li>
+<li>负载均衡<br>我们已经明确了所谓代理服务器的概念，那么接下来，Nginx扮演了反向代理服务器的角色，它是以依据什么样的规则进行请求分发的呢？不用的项目应用场景，分发的规则是否可以控制呢？<br>这里提到的客户端发送的、Nginx反向代理服务器接收到的请求数量，就是我们说的负载量。<br>请求数量按照一定的规则进行分发到不同的服务器处理的规则，就是一种均衡规则。<br>所以~将服务器接收到的请求按照规则分发的过程，称为负载均衡。<br>负载均衡在实际项目操作过程中，有硬件负载均衡和软件负载均衡两种，硬件负载均衡也称为硬负载，如F5负载均衡，相对造价昂贵成本较高，但是数据的稳定性安全性等等有非常好的保障，如中国移动中国联通这样的公司才会选择硬负载进行操作；更多的公司考虑到成本原因，会选择使用软件负载均衡，软件负载均衡是利用现有的技术结合主机硬件实现的一种消息队列分发机制。<br><img src="/img/LoadBalancing.png" alt="avatar">  </li>
+<li><p>Nginx支持的负载均衡调度算法方式如下：  </p>
+<ul>
+<li>1.weight轮询（默认）：接收到的请求按照顺序逐一分配到不同的后端服务器，即使在使用过程中，某一台后端服务器宕机，Nginx会自动将该服务器剔除出队列，请求受理情况不会受到任何影响。 这种方式下，可以给不同的后端服务器设置一个权重值（weight），用于调整不同的服务器上请求的分配率；权重数据越大，被分配到请求的几率越大；该权重值，主要是针对实际工作环境中不同的后端服务器硬件配置进行调整的。  </li>
+<li>2.ip_hash：每个请求按照发起客户端的ip的hash结果进行匹配，这样的算法下一个固定ip地址的客户端总会访问到同一个后端服务器，这也在一定程度上解决了集群部署环境下session共享的问题。</li>
+<li>3.fair：智能调整调度算法，动态的根据后端服务器的请求处理到响应的时间进行均衡分配，响应时间短处理效率高的服务器分配到请求的概率高，响应时间长处理效率低的服务器分配到的请求少；结合了前两者的优点的一种调度算法。但是需要注意的是Nginx默认不支持fair算法，如果要使用这种调度算法，请安装upstream_fair模块。  </li>
+<li>4.url_hash：按照访问的url的hash结果分配请求，每个请求的url会指向后端固定的某个服务器，可以在nginx作为静态服务器的情况下提高缓存效率。同样要注意Nginx默认不支持这种调度算法，要使用的话需要安装nginx的hash软件包。</li>
 </ul>
 </li>
 </ul>
+<h5 id="几种常用web服务器对比"><a href="#几种常用web服务器对比" class="headerlink" title="几种常用web服务器对比"></a>几种常用web服务器对比</h5><p><img src="/img/server.png" alt="avatar">  </p>
 
     </div>
     
@@ -254,15 +251,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/categories/df1872b2.html" class="pre-post btn btn-default" title="Nginx服务详解">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Nginx服务详解</span>
-        </a>
     
-    
-        <a href="/categories/db7c6f16.html" class="next-post btn btn-default" title="Python输出各类三角形">
+        <a href="/categories/1d9fbb6a.html" class="next-post btn btn-default" title="Docker基础">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Python输出各类三角形</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Docker基础</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -284,7 +276,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装Docker"><span class="toc-text">1.安装Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Docker介绍"><span class="toc-text">2.Docker介绍</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx服务详解"><span class="toc-text">Nginx服务详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx功能概述"><span class="toc-text">Nginx功能概述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#几种常用web服务器对比"><span class="toc-text">几种常用web服务器对比</span></a></li></ol></li></ol>
         
     </div>
 </aside>
