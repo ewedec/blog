@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="超哥博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://ewedwc.github.io">
+    <!--SEO-->
+
+
+
+<meta name="keywords" content="超哥个人博客是记录超哥在技术学习中遇到的点点滴滴的问题，让后学者不再遇到同样的坑，超哥不做技术的讲授者，只做技术的踩坑者，这里我将为你提供Linux、Python、数据库、运维等相关方面的知识。">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>hadoop全分布式安装 | 超哥博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="超哥博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="Dingchao.Wu">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ewedwc.github.io">超哥博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Linux/"><i class="fa "></i>Linux</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/Python/"><i class="fa "></i>Python</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/JAVA/"><i class="fa "></i>JAVA</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/大数据/"><i class="fa "></i>大数据</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/运维之路/"><i class="fa "></i>运维之路</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/算法与数学之美/"><i class="fa "></i>算法与数学之美</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="hadoop全分布式安装">
+            
+	            hadoop全分布式安装
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/大数据">
+            大数据
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/hadoop" title="hadoop">
+                        hadoop
+                    </a>
+                
+                    <a href="/tags/大数据" title="大数据">
+                        大数据
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/03/16</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="hadoop-全分布式安装"><a href="#hadoop-全分布式安装" class="headerlink" title="hadoop 全分布式安装"></a>hadoop 全分布式安装</h3><p>系统版本：CentOS7<br>hadoop版本：3.1.1<br>jDK版本：jdk1.8.0_191</p>
+<h4 id="第一部分：Linux环境安装"><a href="#第一部分：Linux环境安装" class="headerlink" title="第一部分：Linux环境安装"></a>第一部分：Linux环境安装</h4><ol>
+<li><p>设置host文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line"># 将所用节点的ip与主机名添加到hosts文件中</span><br><span class="line">如：</span><br><span class="line">192.168.183.10 master</span><br><span class="line">192.168.183.11 slave1</span><br><span class="line">192.168.183.12 slave2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置ssh免密钥登陆</p>
+<blockquote>
+<p>在每个节点上输入ssh-keygen命令生成公私钥文件<br>在master上将公钥放到authorized_keys里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cat id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>将master上的authorized_keys放到其他linux的~/.ssh目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo scp authorized_keys hadoop@10.10.11.192:~/.ssh</span><br><span class="line">sudo scp authorized_keys 远程主机用户名@远程主机名或ip:存放路径。</span><br><span class="line">#修改authorized_keys权限，命令：chmod 644 authorized_keys</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>测试是否成功<br>ssh host2 输入用户名密码，然后退出，再次ssh host2不用密码，直接进入系统。这就表示成功了。</p>
+</blockquote>
+</li>
+<li><p>配置JDK</p>
+<blockquote>
+<p>将JDK tar包上传到所有节点上<br>解压缩：tar -zxvf jdk1.8.0_191.tar.gz -C /usr/java<br>添加环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#在/etc/profile文件中添加</span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_191</span><br><span class="line">RE_HOME=$JAVA_HOME/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>输入命令source /etc/profile让文件立即生效</p>
+</blockquote>
+</li>
+<li><p>关闭linux防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#停止firewall服务 systemctl stop firewalld.service</span><br><span class="line">#禁止firewall开机启动 systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭selinux</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#修改配置文件 vi /etc/selinux/config</span><br><span class="line">#SELINUX=enforcing #注释掉</span><br><span class="line">#SELINUXTYPE=targeted #注释掉</span><br><span class="line">SELINUX=disabled #增加</span><br><span class="line">:wq! #保存退出</span><br><span class="line">#使配置立即生效 setenforce 0</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="第二部分配置hadoop"><a href="#第二部分配置hadoop" class="headerlink" title="第二部分配置hadoop"></a>第二部分配置hadoop</h4><ol>
+<li><p>下载hadoop包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archive.apache.org/dist/hadoop/core/hadoop-3.1.1/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将软件包上传到master节点</p>
+</li>
+<li><p>配置hadoop环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#在/etc/profile文件中添加一下配置</span><br><span class="line">export HADOOP_HOME=/usr/hadoop</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在/usr/hadoop/etc/hadoop目录下修改hadoop-env.sh文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_191</span><br><span class="line">export HADOOP_HOME=/usr/hadoop   #指定程序安装目录</span><br><span class="line">export HDFS_NAMENODE_USER=&quot;root&quot; #指定运行程序的用户</span><br><span class="line">export HDFS_DATANODE_USER=&quot;root&quot;</span><br><span class="line">export HDFS_SECONDARYNAMENODE_USER=&quot;root&quot;</span><br><span class="line">export YARN_RESOURCEMANAGER_USER=&quot;root&quot;</span><br><span class="line">export YARN_NODEMANAGER_USER=&quot;root&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置/usr/hadoop/etc/hadoop目录下的core-site.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;fs.defaultFS&lt;/name&gt;  #NameNode URI</span><br><span class="line">     &lt;value&gt;hdfs://hadoop-master:9000&lt;/value&gt;  </span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;io.file.buffer.size&lt;/name&gt;  #SequenceFiles中使用的读/写缓冲区的大小。</span><br><span class="line">     &lt;value&gt;131072&lt;/value&gt;  </span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置/usr/hadoop/etc/hadoop/目录下的HDFS-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;  #namenode 存储元数据的地址</span><br><span class="line">     &lt;value&gt;/var/hadoop/full&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.blocksize&lt;/name&gt; #设置HDFS bluk块大小默认值128M</span><br><span class="line">     &lt;value&gt;134217728&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.namenode.handler.count  &lt;/name&gt; #设置namenode处理datanode进程数</span><br><span class="line">     &lt;value&gt;100&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;  #datanode数据本地存储路径</span><br><span class="line">     &lt;value&gt;/var/hadoop/hdfs/data/&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.namenode.secondary.http.address&lt;/name&gt;  #namenode webUI地址</span><br><span class="line">     &lt;value&gt;hadoop-master:9870&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.replication&lt;/name&gt; #设置数据副本数</span><br><span class="line">     &lt;value&gt;2&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置/usr/hadoop/etc/hadoop/目录下的yarn-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line"> &lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt; #设置resourcemanagre运行主机</span><br><span class="line">     &lt;value&gt;hadoop-master&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt; #为Map Reduce应用程序设置的随机服务。</span><br><span class="line">     &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置/usr/hadoop/etc/hadoop/目录下的mapred-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;mapreduce.framework.name&lt;/name&gt;  #执行框架设置为Hadoop YARN。</span><br><span class="line">     &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;mapred.job.tracker.http.address&lt;/name&gt;  #jobtracker的tracker页面服务监听地址</span><br><span class="line">     &lt;value&gt;servera:50030&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">     &lt;name&gt;mapred.task.tracker.http.address&lt;/name&gt;   #TT默认监听的httpIP和端口，默认可以不写。端口写0则随机使用。</span><br><span class="line">     &lt;value&gt;servera:50060&lt;/value&gt;</span><br><span class="line"> &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="第三部分：启动hadoop集群"><a href="#第三部分：启动hadoop集群" class="headerlink" title="第三部分：启动hadoop集群"></a>第三部分：启动hadoop集群</h4><blockquote>
+<p>要启动Hadoop集群，您需要启动HDFS和YARN集群。</p>
+<ol>
+<li>第一次启动HDFS时，必须对其进行格式化。将新的分布式文件系统格式化为hdfs：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li><p>使用以下命令以hdfs启动HDFS NameNode ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs --daemon start namenode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用使用以下命令启动HDFS DataNode作为hdfs：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs --daemon start datanode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置了etc / hadoop / workers，则可以使用实用程序脚本启动所有HDFS进程。作为hdfs：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用以下命令启动YARN，在指定的ResourceManager上作为yarn运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn --daemon start resourcemanager</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行脚本以在每个指定的主机上启动NodeManager作为yarn：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn --daemon start nodemanager</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置了etc / hadoop / workers，则可以使用实用程序脚本启动所有YARN进程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用以下命令启动MapReduce JobHistory Server，在指定的服务器上以mapred运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapred --daemon start historyserver</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="第四部分：界面展示"><a href="#第四部分：界面展示" class="headerlink" title="第四部分：界面展示"></a>第四部分：界面展示</h4><ol>
+<li>namenode web-ui界面<br><img src="/img/b31a4c63b1d14ad1aab987a8aa44a7f6.png" alt="avatar">  </li>
+<li>ResourceManager web-ui界面<br><img src="/img/ab0a35d38bb548c88cfbb0d71f6be3ec.png" alt="avatar"></li>
+<li>MapReduce JobHistory Server web-ui界面<br><img src="/img/83a5676e01a045b6892fe7cb394845b5.png" alt="avatar"><h4 id="第五部分：停止集群"><a href="#第五部分：停止集群" class="headerlink" title="第五部分：停止集群"></a>第五部分：停止集群</h4></li>
+<li><p>使用以下命令停止NameNode，在指定的NameNode上以hdfs运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs --daemon stop namenode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行脚本以将DataNode作为hdfs停止：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs --daemon stop datanode</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置了etc / hadoop / workers，则可以使用实用程序脚本停止所有HDFS进程。作为hdfs：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-dfs.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用以下命令停止ResourceManager，在指定的ResourceManager上以yarn形式运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn  -  daemon stop resourcemanager</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行脚本以将作为yarn的worker上的NodeManager停止：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn --daemon stop nodemanager</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置了etc / hadoop / workers,则可以使用实用程序脚本停止所有YARN进程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-yarn.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用以下命令停止MapReduce JobHistory Server，在指定的服务器上以mapred运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapred --daemon stop historyserver</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../img/reward-wepay.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/categories/df1872b2.html" class="next-post btn btn-default" title="Nginx服务详解">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Nginx服务详解</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hadoop-全分布式安装"><span class="toc-text">hadoop 全分布式安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一部分：Linux环境安装"><span class="toc-text">第一部分：Linux环境安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二部分配置hadoop"><span class="toc-text">第二部分配置hadoop</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三部分：启动hadoop集群"><span class="toc-text">第三部分：启动hadoop集群</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四部分：界面展示"><span class="toc-text">第四部分：界面展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第五部分：停止集群"><span class="toc-text">第五部分：停止集群</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
+    <script>
+        var tagOption = {
+            textColour: '#444', // 字体颜色
+            outlineMethod: 'block', // 选中模式
+            outlineColour: '#FFDAB9', // 选中模式的颜色
+            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+            textHeight: 13,
+            outlineRadius: 3,
+            freezeActive: true || '', // 选中的标签是否继续滚动
+            frontSelect: true || '', // 不选标签云后部的标签
+            initial: [0.1, -0.1],
+            depth: 0.5,
+            decel: 0.95,
+            maxSpeed: 0.03,
+            reverse: true || '', // 是否反向触发
+            fadeIn: 500, // 进入动画时间
+            wheelZoom: false || '' // 是否启用鼠标滚轮
+        }
+        TagCanvas.Start('tag-cloud-3d','',tagOption);
+    </script>
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
